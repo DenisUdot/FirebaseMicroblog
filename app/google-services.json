@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "494610932090",
+    "firebase_url": "https://fir-microblog.firebaseio.com",
+    "project_id": "fir-microblog",
+    "storage_bucket": "fir-microblog.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:494610932090:android:1593faae29f1d7a5",
+        "android_client_info": {
+          "package_name": "com.denisudotgmail.firebasemicroblog"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "494610932090-fvrjtsa7lpt3dig5crknqantk8ervvbg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpe3tWnFWSCzLWOqP2hbpnjqCqiy2x69M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
