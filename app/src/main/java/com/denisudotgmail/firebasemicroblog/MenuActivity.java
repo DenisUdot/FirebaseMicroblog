@@ -21,10 +21,12 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, new PostListFragment());
+        ft.commit();
         setContentView(R.layout.activity_menu);
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
-
         drawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout,
                 R.string.open_drawer,R.string.close_drawer){
             //run if panel close
@@ -44,7 +46,7 @@ public class MenuActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-//        selectItem(currentPosition);
+
 
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(
@@ -52,18 +54,22 @@ public class MenuActivity extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         Fragment fragment = null;
+                        int title = 0;
                         switch (menuItem.getItemId()) {
                             case R.id.home_button:
                                 fragment = new PostListFragment();
-//                                mDrawerLayout.closeDrawers();
+                                currentPosition = 0;
+                                title = R.string.post_list;
                                 break;
                             case R.id.add_button:
                                 fragment = new NewPostFragment();
-//                                selectItem(2);
+                                currentPosition = 1;
+                                title = R.string.new_post;
                                 break;
                             case R.id.profile_button:
                                 fragment = new ProfileFragment();
-//                                selectItem(1);
+                                currentPosition = 2;
+                                title = R.string.profile;
                                 break;
                             case R.id.logout_button:
                                 Intent intent = new Intent(MenuActivity.this, AuthorizationActivity.class);
@@ -71,6 +77,8 @@ public class MenuActivity extends AppCompatActivity {
                             break;
                             default:
                                 fragment = new PostListFragment();
+                                currentPosition = 0;
+                                title = R.string.post_list;
                             break;
                         }
                         if(fragment != null) {
@@ -79,6 +87,7 @@ public class MenuActivity extends AppCompatActivity {
                             ft.addToBackStack(null);
                             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                             ft.commit();
+                            getSupportActionBar().setTitle(title);
                         }
                         mDrawerLayout.closeDrawer(navigationView);
                         menuItem.setChecked(true);
@@ -94,28 +103,27 @@ public class MenuActivity extends AppCompatActivity {
                 });
     }
 
-    private void selectItem(int position){
-        currentPosition = position;
-        Fragment fragment = null;
-        switch (position) {
-            case 1:
-                fragment = new ProfileFragment();
-                break;
-            case 2:
-                fragment = new NewPostFragment();
-                break;
-            default:
-                fragment = new PostListFragment();
-                break;
-        }
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.content_frame, fragment);
-        ft.addToBackStack(null);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        ft.commit();
-        mDrawerLayout.closeDrawer(navigationView);
-
-    }
+//    private void selectItem(int position){
+//        currentPosition = position;
+//        Fragment fragment = null;
+//        switch (position) {
+//            case 1:
+//                fragment = new ProfileFragment();
+//                break;
+//            case 2:
+//                fragment = new NewPostFragment();
+//                break;
+//            default:
+//                fragment = new PostListFragment();
+//                break;
+//        }
+//        FragmentTransaction ft = getFragmentManager().beginTransaction();
+//        ft.replace(R.id.content_frame, fragment);
+//        ft.addToBackStack(null);
+//        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+//        ft.commit();
+//        mDrawerLayout.closeDrawer(navigationView);
+//    }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState){

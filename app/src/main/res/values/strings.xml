@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">FirebaseMicroblog</string>
     <string name="registration">Registration</string>
-    <string name="authorization">Authorization</string>
+    <string name="login">Login</string>
     <string name="email">E-mail</string>
     <string name="password">Password</string>
     <string name="conf_password">Conf password</string>
