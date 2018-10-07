@@ -44,6 +44,7 @@ public class AuthorizationActivity extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
+
     }
 
     @Override
@@ -51,6 +52,13 @@ public class AuthorizationActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null) {
+            signOut();
+        }
+    }
+
+    private void signOut() {
+        mAuth.signOut();
     }
 
     private void signIn(String email, String password) {
@@ -75,8 +83,6 @@ public class AuthorizationActivity extends AppCompatActivity {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(AuthorizationActivity.this, "Authentication failed.",Toast.LENGTH_SHORT).show();
-                        }
-                        if (!task.isSuccessful()) {
                             statusTextView.setText(R.string.auth_failed);
                         }
                         progressDialog.hide();

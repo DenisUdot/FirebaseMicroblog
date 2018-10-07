@@ -79,7 +79,6 @@ public class MenuActivity extends AppCompatActivity {
                                 title = R.string.profile;
                                 break;
                             case R.id.logout_button:
-                                mAuth.signOut();
                                 Intent intent = new Intent(MenuActivity.this, AuthorizationActivity.class);
                                 startActivity(intent);
                             break;

@@ -17,11 +17,10 @@
             android:layout_weight="1"
             android:text="@string/email"/>
         <TextView
-            android:id="@+id/email_field"
+            android:id="@+id/profile_email_field"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:text="my@mail.ru"
             />
     </LinearLayout>
     <LinearLayout
@@ -34,11 +33,10 @@
             android:layout_weight="1"
             android:text="@string/name"/>
         <TextView
-            android:id="@+id/name_field"
+            android:id="@+id/profile_name_field"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:text="Dan"
             />
     </LinearLayout>
     <LinearLayout
@@ -51,11 +49,10 @@
             android:layout_weight="1"
             android:text="@string/surname"/>
         <TextView
-            android:id="@+id/surname_field"
+            android:id="@+id/profile_surname_field"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:text="Udot"
             />
     </LinearLayout>
     <LinearLayout
@@ -68,11 +65,10 @@
             android:layout_weight="1"
             android:text="@string/gender"/>
         <TextView
-            android:id="@+id/gender_field"
+            android:id="@+id/profile_gender_field"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:text="male"
             />
     </LinearLayout>
     <LinearLayout
@@ -85,11 +81,10 @@
             android:layout_weight="1"
             android:text="@string/age"/>
         <TextView
-            android:id="@+id/age_field"
+            android:id="@+id/profile_age_field"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:text="my@mail.ru"
             />
     </LinearLayout>
 </LinearLayout>

@@ -20,10 +20,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegistrationActivity extends AppCompatActivity {
     private static final String TAG = "EmailPassword";
-
+    public static final String USER_DATA = "user_data";
     UserData userData;
     private EditText emailEditText, nameEditText, surnameEditText, ageEditText, passwordEditText1, passwordEditText2;
     private RadioGroup genderRadioGroup;
@@ -32,6 +34,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
 
     private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,21 +58,9 @@ public class RegistrationActivity extends AppCompatActivity {
         maleButton = (RadioButton) findViewById(R.id.male_button);
         femaleButton = (RadioButton) findViewById(R.id.female_button);
         maleButton.setChecked(true);
-//        genderRadioGroup.setOnCheckedChangeListener(new RadioGroupClickListener());
 
         mAuth = FirebaseAuth.getInstance();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(mAuth.getCurrentUser() != null){
-            Intent intent = new Intent(RegistrationActivity.this, MenuActivity.class);
-            startActivity(intent);
-        }
-//        updateUI(currentUser);
+        userData = new UserData();
     }
 
     private void createAccount(String email, String password) {
@@ -85,28 +76,26 @@ public class RegistrationActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            //return to log in activity
-                            Intent intent = new Intent(RegistrationActivity.this, MenuActivity.class);
-                            startActivity(intent);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(RegistrationActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-//                            updateUI(null);
-                        }
 
-                        // [START_EXCLUDE]
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference ref = database.getReference();
+                            DatabaseReference myRef = ref.child(mAuth.getUid());
+                            myRef.setValue(userData);
+
+                            Intent intent = new Intent(RegistrationActivity.this, AuthorizationActivity.class);
+                            startActivity(intent);
+                            // [END create_user_with_email]
+
+                        } else {
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(RegistrationActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+
+                        }
                         progressDialog.hide();
-                        // [END_EXCLUDE]
                     }
                 });
-        // [END create_user_with_email]
     }
-
 
     private boolean validateForm() {
         boolean valid = true;
@@ -124,6 +113,7 @@ public class RegistrationActivity extends AppCompatActivity {
             nameEditText.setError(getResources().getString(R.string.required));
             valid = false;
         } else {
+            userData.setName(name);
             nameEditText.setError(null);
         }
 
@@ -132,7 +122,17 @@ public class RegistrationActivity extends AppCompatActivity {
             surnameEditText.setError(getResources().getString(R.string.required));
             valid = false;
         } else {
+            userData.setSurname(surname);
             surnameEditText.setError(null);
+        }
+
+        switch (genderRadioGroup.getCheckedRadioButtonId()) {
+            case R.id.male_button:
+                userData.setGender("male");
+                break;
+            case R.id.female_button:
+                userData.setGender("female");
+            break;
         }
 
         String textAge = ageEditText.getText().toString();
@@ -146,6 +146,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 ageEditText.setError(getResources().getString(R.string.required));
                 valid = false;
             } else {
+                userData.setAge(age);
                 ageEditText.setError(null);
             }
         }
@@ -173,7 +174,7 @@ public class RegistrationActivity extends AppCompatActivity {
     class RegistrateButtonClickListener implements View.OnClickListener{
         @Override
         public void onClick(View v) {
-            createAccount("denisudot@gmail.com", "123456");
+            createAccount(emailEditText.getText().toString(), passwordEditText2.getText().toString());
         }
     }
 
