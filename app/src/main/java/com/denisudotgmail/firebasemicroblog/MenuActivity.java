@@ -13,11 +13,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class MenuActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private NavigationView navigationView;
     private ActionBarDrawerToggle drawerToggle;
     private int currentPosition = 0;
+
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +29,9 @@ public class MenuActivity extends AppCompatActivity {
         ft.replace(R.id.content_frame, new PostListFragment());
         ft.commit();
         setContentView(R.layout.activity_menu);
+
+        //firebase aunt
+        mAuth = FirebaseAuth.getInstance();
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
         drawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout,
@@ -72,6 +79,7 @@ public class MenuActivity extends AppCompatActivity {
                                 title = R.string.profile;
                                 break;
                             case R.id.logout_button:
+                                mAuth.signOut();
                                 Intent intent = new Intent(MenuActivity.this, AuthorizationActivity.class);
                                 startActivity(intent);
                             break;

@@ -22,18 +22,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:singleLine="true"
-            android:textSize="18sp"
-            android:background="@drawable/text_border"
-            />
+            android:singleLine="true" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorBlack"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,18 +46,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:singleLine="true"
-            android:textSize="18sp"
-            android:background="@drawable/text_border"
-            />
+            android:singleLine="true" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorBlack"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -76,18 +70,42 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:singleLine="true"
-            android:textSize="18sp"
-            android:background="@drawable/text_border"
-            />
+            android:singleLine="true" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorBlack"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="@string/age"/>
+        <EditText
+            android:id="@+id/age_field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLength="3"
+            android:ems="3"
+            android:singleLine="true"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorBlack"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -101,9 +119,10 @@
             android:text="@string/gender"/>
         <RadioGroup
             android:id="@+id/gender_radio_group"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1.5"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal">
             <RadioButton
                 android:id="@+id/male_button"
                 android:layout_width="wrap_content"
@@ -121,14 +140,14 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorBlack"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="5dp">
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -139,10 +158,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:singleLine="true"
-            android:textSize="18sp"
-            android:background="@drawable/text_border"
-            />
+            android:singleLine="true"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -158,45 +174,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:singleLine="true"
-            android:textSize="18sp"
-            android:background="@drawable/text_border"
-            />
+            android:singleLine="true" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorBlack"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:text="@string/age"/>
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </Spinner>
-    </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorBlack"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"/>
+
+
 
     <Button
+        android:id="@+id/sing_up_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/registrate"/>
+        android:text="@string/sign_up"/>
 
 </LinearLayout>

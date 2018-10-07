@@ -11,7 +11,7 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="age">Age</string>
-    <string name="registrate">Registrate</string>
+    <string name="sign_up">Sign up</string>
     <string name="profile">Profile</string>
     <string name="add_post">Add post</string>
     <string name="new_post">New Post</string>
@@ -21,7 +21,13 @@
     <string name="menu">Menu</string>
     <string name="open_drawer">Open drawer</string>
     <string name="close_drawer">Close drawer</string>
+    <string name="required">Required</string>
+    <string name="min_required_length">Min required length is 6</string>
+    <string name="different_passwords">Different passwords</string>
+
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="auth_failed">Server is unavailable please try again later.</string>
 </resources>
