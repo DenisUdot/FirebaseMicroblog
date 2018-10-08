@@ -43,7 +43,7 @@ public class ProfileFragment extends Fragment {
         myRef = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
 
-        progressDialog = new ProgressDialog(getActivity());
+        progressDialog = new ProgressDialog(layout.getContext());
         progressDialog.setMessage("Loading...");
         return layout;
     }
@@ -58,7 +58,7 @@ public class ProfileFragment extends Fragment {
     private void getUserData() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         if(mAuth.getCurrentUser() != null) {
-            DatabaseReference myRef = database.getReference(mAuth.getUid());
+            DatabaseReference myRef = database.getReference("users").child(mAuth.getCurrentUser().getUid());
             myRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -86,7 +86,7 @@ public class ProfileFragment extends Fragment {
             nameTextView.setText(userData.getName());
             surnameTextView.setText(userData.getSurname());
             genderTextView.setText(userData.getGender());
-            ageTextView.setText(Integer.toString(userData.getAge()));
+            ageTextView.setText(Long.toString(userData.getAge()));
         }
     }
 }

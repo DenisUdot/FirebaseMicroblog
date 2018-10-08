@@ -35,7 +35,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".MenuActivity"
-            android:label="@string/post_list"/>
+            android:label="@string/post_list"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

@@ -4,7 +4,7 @@ public class UserData {
     private String name;
     private String surname;
     private String gender;
-    private int age;
+    private long age;
 
 
     public String getGender() {
@@ -35,7 +35,7 @@ public class UserData {
         return surname;
     }
 
-    public int getAge() {
+    public long getAge() {
         return age;
     }
 

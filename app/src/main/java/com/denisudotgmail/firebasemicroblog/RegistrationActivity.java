@@ -80,8 +80,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
                             DatabaseReference ref = database.getReference();
-                            DatabaseReference myRef = ref.child(mAuth.getUid());
-                            myRef.setValue(userData);
+                            ref.child("users").child(mAuth.getCurrentUser().getUid()).setValue(userData);
 
                             Intent intent = new Intent(RegistrationActivity.this, AuthorizationActivity.class);
                             startActivity(intent);
@@ -177,23 +176,4 @@ public class RegistrationActivity extends AppCompatActivity {
             createAccount(emailEditText.getText().toString(), passwordEditText2.getText().toString());
         }
     }
-
-
-//    // may be never used
-//    class RadioGroupClickListener implements RadioGroup.OnCheckedChangeListener{
-//        @Override
-//        public void onCheckedChanged(RadioGroup group, int checkedId) {
-//            switch (checkedId){
-//                case R.id.male_button:
-//                    Toast.makeText(getApplicationContext(), "male", Toast.LENGTH_SHORT).show();
-//                    break;
-//                case R.id.female_button:
-//                    Toast.makeText(getApplicationContext(), "female", Toast.LENGTH_SHORT).show();
-//                    break;
-//                case (-1):
-//                    //any button was't pressed
-//                    break;
-//            }
-//        }
-//    }
 }
