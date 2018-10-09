@@ -29,5 +29,5 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="auth_failed">Server is unavailable please try again later.</string>
+    <string name="auth_failed">Please check your e-mail and password and try again.</string>
 </resources>
