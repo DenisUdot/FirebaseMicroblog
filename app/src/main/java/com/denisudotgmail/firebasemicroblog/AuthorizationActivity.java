@@ -23,19 +23,19 @@ public class AuthorizationActivity extends AppCompatActivity {
     private static final String TAG = "EmailPassword";
 
     private TextView emailTextView, passwordTextView, statusTextView;
-    private Button regButton, autButton;
     private FirebaseAuth mAuth;
     private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_authorization);
-        emailTextView = (TextView)findViewById(R.id.aut_email_field);
-        passwordTextView = (TextView) findViewById(R.id.aut_password_field);
-        statusTextView = (TextView) findViewById(R.id.status_text_field);
-        autButton = (Button) findViewById(R.id.aut_button);
-        regButton = (Button) findViewById(R.id.reg_button);
+        emailTextView = findViewById(R.id.aut_email_field);
+        passwordTextView = findViewById(R.id.aut_password_field);
+        statusTextView = findViewById(R.id.status_text_field);
+        Button autButton = findViewById(R.id.aut_button);
+        Button regButton = findViewById(R.id.reg_button);
         ButtonClickListener buttonClickListener = new ButtonClickListener();
         autButton.setOnClickListener(buttonClickListener);
         regButton.setOnClickListener(buttonClickListener);
@@ -50,7 +50,7 @@ public class AuthorizationActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
+
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null) {
             signOut();
@@ -67,19 +67,17 @@ public class AuthorizationActivity extends AppCompatActivity {
             return;
         }
         progressDialog.show();
-        // [START sign_in_with_email]
+
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             statusTextView.setText("");
                             Intent intent = new Intent(AuthorizationActivity.this, MenuActivity.class);
                             startActivity(intent);
                         } else {
-                            // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(AuthorizationActivity.this, "Authentication failed.",Toast.LENGTH_SHORT).show();
                             statusTextView.setText(R.string.auth_failed);
@@ -87,7 +85,6 @@ public class AuthorizationActivity extends AppCompatActivity {
                         progressDialog.hide();
                     }
                 });
-        // [END sign_in_with_email]
     }
 
     private boolean validateForm() {

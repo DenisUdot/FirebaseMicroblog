@@ -1,15 +1,15 @@
 package com.denisudotgmail.firebasemicroblog;
 
 
-import android.os.Bundle;
 import android.app.Fragment;
-import android.support.annotation.NonNull;
+import android.app.FragmentTransaction;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -19,101 +19,118 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class PostListFragment extends Fragment {
 
+    // [START define_database_reference]
+    private DatabaseReference mDatabase;
+    private FirebaseRecyclerAdapter<Post, PostViewHolder> mAdapter;
+    private RecyclerView mRecycler;
     private FirebaseAuth mAuth;
-    private DatabaseReference myRef;
-    private RecyclerView postRecycleView;
-    private LinearLayoutManager linearLayoutManager;
-    private FirebaseRecyclerAdapter<Post, PostViewHolder> mPostAdapter;
-    private DatabaseReference mRef;
-    private DatabaseReference childRef;
-    private String uid;
-
-    Query query;
 
     public PostListFragment() {
         // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View layout = inflater.inflate(R.layout.fragment_post_list, container, false);
+    public View onCreateView (LayoutInflater inflater, ViewGroup container,
+                              Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+
+        final View layout = inflater.inflate(R.layout.fragment_post_list, container, false);
+        // [END define_database_reference]
+        Button newPostButton = layout.findViewById(R.id.start_new_post);
+        newPostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.content_frame, new NewPostFragment(), "visible_fragment");
+                ft.addToBackStack(null);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                ft.commit();
+            }
+        });
+
+        // [START create_database_reference]
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
-        uid = mAuth.getCurrentUser().getUid();
-        query = FirebaseDatabase.getInstance()
-                .getReference()
-                .child("user-posts/"+uid)
-                .limitToLast(50);
-        //set fragment Title
-//        getActivity().setTitle(getString(R.string.age));
+        // [END create_database_reference]
 
-        linearLayoutManager = new LinearLayoutManager(getActivity());
+        mRecycler = layout.findViewById(R.id.post_list);
+        mRecycler.setHasFixedSize(true);
 
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        myRef = database.getReference();
-        childRef = myRef.child("user-posts/"+uid);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        postRecycleView = (RecyclerView) layout.findViewById(R.id.post_list);
-        postRecycleView.setHasFixedSize(true);
-        postRecycleView.setLayoutManager(mLayoutManager);
         return layout;
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        attachRecyclerViewAdapter();
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        // Set up Layout Manager, reverse layout
+        LinearLayoutManager mManager = new LinearLayoutManager(getActivity());
+        mManager.setReverseLayout(true);
+        mManager.setStackFromEnd(true);
+        mRecycler.setLayoutManager(mManager);
+
+        // Set up FirebaseRecyclerAdapter with the Query
+        Query postsQuery = mDatabase.child("user-posts").child(getUid());
+
+        FirebaseRecyclerOptions options = new FirebaseRecyclerOptions.Builder<Post>()
+                .setQuery(postsQuery, Post.class)
+                .build();
+
+        mAdapter = new FirebaseRecyclerAdapter<Post, PostViewHolder>(options) {
+
+            @Override
+            public PostViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+                LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+                return new PostViewHolder(inflater.inflate(R.layout.post_view, viewGroup, false));
+            }
+
+            @Override
+            protected void onBindViewHolder(PostViewHolder viewHolder,
+                                            int position,
+                                            final Post model) {
+//                final DatabaseReference postRef = getRef(position);
+                // Set click listener for the whole post view
+//                final String postKey = postRef.getKey();
+//                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+                        // Launch PostDetailActivity
+//                        Intent intent = new Intent(getActivity(), PostDetailActivity.class);
+//                        intent.putExtra(PostDetailActivity.EXTRA_POST_KEY, postKey);
+//                        startActivity(intent);
+//                    }
+//                });
+                viewHolder.bindToPost(model);
+            }
+        };
+        mRecycler.setAdapter(mAdapter);
+    }
+
+    // [START post_stars_transaction
+    // [END post_stars_transaction]
 
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mAdapter.notifyDataSetChanged();
+        if (mAdapter != null) {
+            mAdapter.startListening();
+        }
     }
 
     @Override
     public void onStop() {
         super.onStop();
-
+        if (mAdapter != null) {
+            mAdapter.stopListening();
+        }
     }
 
-    private void attachRecyclerViewAdapter() {
 
-        final RecyclerView.Adapter adapter = newAdapter();
-
-        // Scroll to bottom on new messages
-        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onItemRangeInserted(int positionStart, int itemCount) {
-                postRecycleView.smoothScrollToPosition(adapter.getItemCount());
-            }
-        });
-
-        postRecycleView.setAdapter(adapter);
-    }
-
-    protected RecyclerView.Adapter newAdapter() {
-        FirebaseRecyclerOptions<Post> options = new FirebaseRecyclerOptions.Builder<Post>().setQuery(query, Post.class).build();
-        return new FirebaseRecyclerAdapter<Post, PostViewHolder>(options) {
-            @Override
-            public PostViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                return new PostViewHolder(LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.post_view, parent, false));
-            }
-
-            @Override
-            protected void onBindViewHolder(PostViewHolder holder, int position, Post model) {
-                holder.postTextView.setText(model.text);
-                holder.dateTextView.setText(model.date);
-            }
-
-            @Override
-            public void onDataChanged() {
-            }
-        };
+    public String getUid() {
+        return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 }

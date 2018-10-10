@@ -25,7 +25,6 @@ public class ProfileFragment extends Fragment {
     private ProgressDialog progressDialog;
 
     private TextView emailTextView, nameTextView, surnameTextView, genderTextView, ageTextView;
-    private DatabaseReference myRef;
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -34,13 +33,13 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_profile, container, false);
-        emailTextView = (TextView) layout.findViewById(R.id.profile_email_field);
-        nameTextView = (TextView) layout.findViewById(R.id.profile_name_field);
-        surnameTextView = (TextView) layout.findViewById(R.id.profile_surname_field);
-        genderTextView = (TextView) layout.findViewById(R.id.profile_gender_field);
-        ageTextView = (TextView) layout.findViewById(R.id.profile_age_field);
+        emailTextView = layout.findViewById(R.id.profile_email_field);
+        nameTextView = layout.findViewById(R.id.profile_name_field);
+        surnameTextView = layout.findViewById(R.id.profile_surname_field);
+        genderTextView = layout.findViewById(R.id.profile_gender_field);
+        ageTextView = layout.findViewById(R.id.profile_age_field);
 
-        myRef = FirebaseDatabase.getInstance().getReference();
+
         mAuth = FirebaseAuth.getInstance();
 
         progressDialog = new ProgressDialog(layout.getContext());
@@ -62,7 +61,7 @@ public class ProfileFragment extends Fragment {
             myRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    userData = (UserData) dataSnapshot.getValue(UserData.class);
+                    userData = dataSnapshot.getValue(UserData.class);
                     if (userData != null) {
                         writeUserDataFields();
                     }
@@ -86,7 +85,7 @@ public class ProfileFragment extends Fragment {
             nameTextView.setText(userData.getName());
             surnameTextView.setText(userData.getSurname());
             genderTextView.setText(userData.getGender());
-            ageTextView.setText(Long.toString(userData.getAge()));
+            ageTextView.setText(String.valueOf(userData.getAge()));
         }
     }
 }

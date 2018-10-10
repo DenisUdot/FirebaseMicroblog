@@ -33,6 +33,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:16.0.4'
     implementation 'com.google.firebase:firebase-database:16.0.3'
     implementation 'com.firebaseui:firebase-ui-database:4.2.0'
+    // Needed to fix a dependency conflict with FirebaseUI'
+    implementation 'android.arch.core:runtime:1.1.1'
 
     //drawer menu
     implementation 'com.android.support:design:27.1.1'
