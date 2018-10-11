@@ -12,19 +12,17 @@ import android.widget.Button;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
-
-public class PostListFragment extends Fragment {
+public class AllPostListFragment extends Fragment {
 
     private DatabaseReference mDatabase;
     private FirebaseRecyclerAdapter<Post, PostViewHolder> mAdapter;
     private RecyclerView mRecycler;
 
-    public PostListFragment() {
+    public AllPostListFragment() {
         // Required empty public constructor
     }
 
@@ -33,7 +31,7 @@ public class PostListFragment extends Fragment {
                               Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        final View layout = inflater.inflate(R.layout.fragment_post_list, container, false);
+        final View layout = inflater.inflate(R.layout.fragment_allpost_list, container, false);
 
         Button newPostButton = layout.findViewById(R.id.start_new_post);
         newPostButton.setOnClickListener(new View.OnClickListener() {
@@ -46,12 +44,10 @@ public class PostListFragment extends Fragment {
                 ft.commit();
             }
         });
-
         // [START create_database_reference]
         mDatabase = FirebaseDatabase.getInstance().getReference();
         // [END create_database_reference]
-
-        mRecycler = layout.findViewById(R.id.post_list);;
+        mRecycler = layout.findViewById(R.id.all_post_list);
 
         return layout;
     }
@@ -66,7 +62,7 @@ public class PostListFragment extends Fragment {
         mManager.setStackFromEnd(true);
         mRecycler.setLayoutManager(mManager);
 
-        Query postsQuery = mDatabase.child("user-posts").child(getUid()).orderByPriority();
+        Query postsQuery = mDatabase.child("posts").orderByPriority();
 
         FirebaseRecyclerOptions options = new FirebaseRecyclerOptions.Builder<Post>()
                 .setQuery(postsQuery, Post.class)
@@ -90,7 +86,7 @@ public class PostListFragment extends Fragment {
 //                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
 //                    @Override
 //                    public void onClick(View v) {
-                        // Launch PostDetailActivity
+                // Launch PostDetailActivity
 //                        Intent intent = new Intent(getActivity(), PostDetailActivity.class);
 //                        intent.putExtra(PostDetailActivity.EXTRA_POST_KEY, postKey);
 //                        startActivity(intent);
@@ -118,8 +114,5 @@ public class PostListFragment extends Fragment {
             mAdapter.stopListening();
         }
     }
-
-    public String getUid() {
-        return FirebaseAuth.getInstance().getCurrentUser().getUid();
-    }
 }
+

@@ -74,7 +74,6 @@ public class AuthorizationActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "signInWithEmail:success");
-                            statusTextView.setText("");
                             Intent intent = new Intent(AuthorizationActivity.this, MenuActivity.class);
                             startActivity(intent);
                         } else {
@@ -113,6 +112,7 @@ public class AuthorizationActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.aut_button:
+                    statusTextView.setText("");
                     signIn(emailTextView.getText().toString(), passwordTextView.getText().toString());
                     break;
                 case R.id.reg_button:

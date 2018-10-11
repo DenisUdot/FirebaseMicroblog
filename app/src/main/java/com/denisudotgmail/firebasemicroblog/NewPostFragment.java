@@ -46,6 +46,7 @@ public class NewPostFragment extends Fragment {
         Button addPostButton = layout.findViewById(R.id.new_post_button);
         addPostButton.setOnClickListener(new PostButtonClickListener());
         postEditText = layout.findViewById(R.id.new_post_text);
+        postEditText.requestFocus();
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();

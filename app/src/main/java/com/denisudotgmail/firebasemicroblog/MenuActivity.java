@@ -64,6 +64,9 @@ public class MenuActivity extends AppCompatActivity {
                 if(fragment instanceof ProfileFragment){
                     currentPosition = 2;
                 }
+                if(fragment instanceof AllPostListFragment){
+                    currentPosition = 3;
+                }
                 setActionBarTitle(currentPosition);
             }
         });
@@ -84,21 +87,23 @@ public class MenuActivity extends AppCompatActivity {
                             case R.id.profile_button:
                                 fragment = new ProfileFragment();
                                 break;
+                            case R.id.all_posts_button:
+                                fragment = new AllPostListFragment();
+                                break;
                             case R.id.logout_button:
                                 Intent intent = new Intent(MenuActivity.this, AuthorizationActivity.class);
                                 startActivity(intent);
-                            break;
                             default:
                                 fragment = new PostListFragment();
-                            break;
+                                break;
                         }
-                        if(fragment != null) {
-                            FragmentTransaction ft = getFragmentManager().beginTransaction();
-                            ft.replace(R.id.content_frame, fragment, "visible_fragment");
-                            ft.addToBackStack(null);
-                            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                            ft.commit();
-                        }
+
+                        FragmentTransaction ft = getFragmentManager().beginTransaction();
+                        ft.replace(R.id.content_frame, fragment, "visible_fragment");
+                        ft.addToBackStack(null);
+                        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                        ft.commit();
+
                         mDrawerLayout.closeDrawer(navigationView);
                         menuItem.setChecked(true);
                         return true;
@@ -117,6 +122,9 @@ public class MenuActivity extends AppCompatActivity {
                 break;
             case 2:
                 title = getResources().getString(R.string.profile);
+                break;
+            case 3:
+                title = getResources().getString(R.string.all_posts);
                 break;
             default:
                 title = getResources().getString(R.string.app_name);

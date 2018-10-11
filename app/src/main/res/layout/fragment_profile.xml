@@ -63,9 +63,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/gender"/>
+            android:text="@string/age"/>
         <TextView
-            android:id="@+id/profile_gender_field"
+            android:id="@+id/profile_age_field"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
@@ -79,12 +79,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/age"/>
+            android:text="@string/gender"/>
         <TextView
-            android:id="@+id/profile_age_field"
+            android:id="@+id/profile_gender_field"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
             />
     </LinearLayout>
+
 </LinearLayout>

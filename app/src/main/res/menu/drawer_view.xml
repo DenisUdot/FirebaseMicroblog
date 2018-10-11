@@ -12,6 +12,9 @@
         <item
             android:id="@+id/profile_button"
             android:title="@string/profile" />
+        <item
+            android:id="@+id/all_posts_button"
+            android:title="@string/all_posts" />
     </group>
     <group
         android:id="@+id/menu_bottom"

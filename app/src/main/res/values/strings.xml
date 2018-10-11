@@ -24,6 +24,7 @@
     <string name="required">Required</string>
     <string name="min_required_length">Min required length is 6</string>
     <string name="different_passwords">Different passwords</string>
+    <string name="all_posts">All posts</string>
 
 
 
