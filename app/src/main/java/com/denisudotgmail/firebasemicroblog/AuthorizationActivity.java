@@ -44,6 +44,7 @@ public class AuthorizationActivity extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
+        getSupportActionBar().setTitle(R.string.login);
 
     }
 

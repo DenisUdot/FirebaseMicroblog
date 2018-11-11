@@ -192,6 +192,9 @@
             android:id="@+id/sing_up_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/sign_up"/>
+            android:paddingStart="40dp"
+            android:paddingEnd="40dp"
+            android:text="@string/sign_up"
+            android:background="@drawable/button_background"/>
     </LinearLayout>
 </ScrollView>
